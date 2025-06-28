@@ -1,5 +1,10 @@
 package com.homework.coindesk.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +18,11 @@ import java.util.List;
  *     chart_name VARCHAR(50)
  * );
  */
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "CHART")
 public class Chart {
@@ -30,7 +40,9 @@ public class Chart {
     @Column(name = "chart_name")
     private String chartName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chart")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "chart", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<Bpi> bpiList;
 
 }

@@ -1,5 +1,11 @@
 package com.homework.coindesk.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,6 +22,10 @@ import java.math.BigDecimal;
  *     FOREIGN KEY (chart_id) REFERENCES CHART (id)
  * );
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "BPI")
 public class Bpi {
@@ -41,6 +51,7 @@ public class Bpi {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chart_id")
+    @JsonBackReference
     private Chart chart;
 
 }
