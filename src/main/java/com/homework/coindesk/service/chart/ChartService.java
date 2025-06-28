@@ -127,6 +127,7 @@ public class ChartService {
         List<BpiResp> bpiRespList = chart.getBpiList().stream()
                 .map(bpi -> {
                     BpiResp bpiResp = BpiResp.builder()
+                            .id(bpi.getId())
                             .code(bpi.getCode())
                             .symbol(bpi.getSymbol())
                             .rate(bpi.getRate())
