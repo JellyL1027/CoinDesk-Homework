@@ -56,8 +56,12 @@ public class ChartController {
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteChart(@PathVariable Long id) {
-        chartService.deleteChart(id);
-        return ResponseEntity.noContent().build();
+        try {
+            chartService.deleteChart(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

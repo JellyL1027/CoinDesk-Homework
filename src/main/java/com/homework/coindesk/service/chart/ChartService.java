@@ -73,6 +73,9 @@ public class ChartService {
 
     // Delete
     public void deleteChart(Long id) {
+        if (!chartRepository.existsById(id)) {
+            throw new RuntimeException("Chart with ID " + id + " not found");
+        }
         chartRepository.deleteById(id);
     }
 
