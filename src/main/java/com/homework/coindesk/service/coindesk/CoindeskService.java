@@ -3,6 +3,7 @@ package com.homework.coindesk.service.coindesk;
 import com.homework.coindesk.controller.coindesk.resp.ConvertedCoindeskResp;
 import com.homework.coindesk.service.api.CoindeskAPI;
 import com.homework.coindesk.service.api.dto.CoindeskApiDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CoindeskService {
 
@@ -35,12 +37,16 @@ public class CoindeskService {
     /**
      * 轉換coindesk API response 成 ConvertedCoindeskResp
      */
-    private ConvertedCoindeskResp buildConvertedCoindeskResp(CoindeskApiDto dto) {
+    protected ConvertedCoindeskResp buildConvertedCoindeskResp(CoindeskApiDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("CoindeskApiDto 不可為 null");
+        }
+
         List<ConvertedCoindeskResp.BpiDto> bpiDtoList = new ArrayList<>();
 
         dto.getBpi().forEach((code, bpi) -> bpiDtoList.add(ConvertedCoindeskResp.BpiDto.builder()
                 .code(bpi.getCode())
-                .codeName(Currency.getInstance(bpi.getCode()).getDisplayName())
+                .codeName(getCodeName(bpi.getCode()))
                 .rateFloat(bpi.getRateFloat())
                 .build()));
 
@@ -65,4 +71,15 @@ public class CoindeskService {
         return localDateTime.format(formatter);
     }
 
+    /**
+     * 轉換 幣別 成 指定Currency
+     */
+    private String getCodeName(String code) {
+        try {
+            return Currency.getInstance(code).getDisplayName();
+        } catch (IllegalArgumentException e) {
+            log.warn("轉換幣別發生錯誤 -> {}", e.getMessage());
+            return "未知幣別";
+        }
+    }
 }
