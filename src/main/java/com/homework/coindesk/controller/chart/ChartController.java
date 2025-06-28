@@ -1,10 +1,8 @@
-package com.homework.coindesk.controller;
+package com.homework.coindesk.controller.chart;
 
-import com.homework.coindesk.controller.req.ChartSaveReq;
-import com.homework.coindesk.controller.resp.ChartResp;
-import com.homework.coindesk.entity.Chart;
-import com.homework.coindesk.service.ChartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.homework.coindesk.controller.chart.req.ChartSaveReq;
+import com.homework.coindesk.controller.chart.resp.ChartResp;
+import com.homework.coindesk.service.chart.ChartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +12,11 @@ import java.util.List;
 @RequestMapping("/chart")
 public class ChartController {
 
-    @Autowired
-    private ChartService chartService;
+    private final ChartService chartService;
+
+    public ChartController(ChartService chartService) {
+        this.chartService = chartService;
+    }
 
     // Create
     @PostMapping

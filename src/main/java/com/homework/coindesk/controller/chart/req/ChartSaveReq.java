@@ -1,4 +1,4 @@
-package com.homework.coindesk.controller.req;
+package com.homework.coindesk.controller.chart.req;
 
 import lombok.Data;
 import java.math.BigDecimal;

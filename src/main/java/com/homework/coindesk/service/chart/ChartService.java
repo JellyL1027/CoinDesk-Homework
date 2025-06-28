@@ -1,12 +1,11 @@
-package com.homework.coindesk.service;
+package com.homework.coindesk.service.chart;
 
-import com.homework.coindesk.controller.req.ChartSaveReq;
-import com.homework.coindesk.controller.resp.BpiResp;
-import com.homework.coindesk.controller.resp.ChartResp;
+import com.homework.coindesk.controller.chart.req.ChartSaveReq;
+import com.homework.coindesk.controller.chart.resp.BpiResp;
+import com.homework.coindesk.controller.chart.resp.ChartResp;
 import com.homework.coindesk.entity.Bpi;
 import com.homework.coindesk.entity.Chart;
 import com.homework.coindesk.repository.ChartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -18,8 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class ChartService {
 
-    @Autowired
-    private ChartRepository chartRepository;
+    private final ChartRepository chartRepository;
+
+    public ChartService(ChartRepository chartRepository) {
+        this.chartRepository = chartRepository;
+    }
 
     // Create
     public ChartResp createChart(ChartSaveReq req) {

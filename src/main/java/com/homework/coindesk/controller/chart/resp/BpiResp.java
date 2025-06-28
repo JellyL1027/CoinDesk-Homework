@@ -1,4 +1,4 @@
-package com.homework.coindesk.controller.resp;
+package com.homework.coindesk.controller.chart.resp;
 
 import lombok.Builder;
 import lombok.Data;
